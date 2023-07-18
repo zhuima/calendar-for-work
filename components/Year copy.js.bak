@@ -1,0 +1,85 @@
+/*
+ * @Author: zhuima zhuima314@gmail.com
+ * @Date: 2023-07-17 14:05:13
+ * @LastEditors: zhuima zhuima314@gmail.com
+ * @LastEditTime: 2023-07-17 19:07:23
+ * @FilePath: /calendar-nextjs-js/components/Year.js
+ * @Description:
+ *
+ * Copyright (c) 2023 by ${git_name_email}, All Rights Reserved.
+ */
+import React, { useState } from "react";
+import {
+  Calendar,
+  dateFnsLocalizer,
+  momentLocalizer,
+} from "react-big-calendar";
+import moment from "moment";
+// import dates from "react-big-calendar/lib/utils/dates";
+// import { navigate } from "react-big-calendar/lib/utils/constants";
+
+const date = moment();
+
+function Year({ date }) {
+  const months = [];
+  for (let i = 0; i < 12; i++) {
+    const month = moment(date).month(i);
+    months.push(<Month key={i} month={month} />);
+  }
+
+  return <div className="year">{months} </div>;
+}
+
+function Month({ month }) {
+  const isCurrent = month.format("MMMM") === moment().format("MMMM");
+  const days = [];
+
+  for (let i = 1; i <= month.daysInMonth(); i++) {
+    const dayDate = date.clone().set("date", i);
+    const isToday = dayDate.date() === moment().date();
+
+    days.push(
+      <div
+        key={i}
+        className={`${isToday && isCurrent ? "text-blue-500 " : ""}`}
+      >
+        {i}
+      </div>
+    );
+  }
+  return (
+    <div className="p-4 max-w-sm bg-white rounded-lg border shadow-md mt-3 mx-4 my-6">
+      <div
+        className={`${
+          isCurrent
+            ? "text-blue-500 font-bold text-xl mb-2 "
+            : "font-bold text-xl mb-2 "
+        }`}
+      >
+        {month.format("MMMM")}
+      </div>
+
+      <div className="grid grid-cols-7 gap-4">{days}</div>
+    </div>
+  );
+}
+
+Year.navigate = (date, action, view) => {
+  if (!moment.isMoment(date)) {
+    date = moment(date);
+  }
+  switch (action) {
+    case "PREV":
+      return date.clone().subtract(1, "year");
+
+    case "NEXT":
+      return date.clone().add(1, "year");
+
+    default:
+      return date;
+  }
+};
+
+Year.title = (date, { localizer }) => localizer.format(date, "YYYY" + " 年");
+
+export default Year;
