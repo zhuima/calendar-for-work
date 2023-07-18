@@ -2,7 +2,7 @@
  * @Author: zhuima zhuima314@gmail.com
  * @Date: 2023-07-14 15:36:56
  * @LastEditors: zhuima zhuima314@gmail.com
- * @LastEditTime: 2023-07-18 15:22:46
+ * @LastEditTime: 2023-07-18 15:35:25
  * @FilePath: /calendar-nextjs-js/components/Calendar.js
  * @Description:
  *
@@ -48,7 +48,6 @@ const MyCalendar = () => {
       <SweetAlert
         input
         showCancel
-        style={{ display: "block", marginTop: "100px" }}
         confirmBtnBsStyle="success"
         cancelBtnBsStyle="warning"
         confirmBtnText="添加"
